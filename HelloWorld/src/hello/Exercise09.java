@@ -7,7 +7,7 @@ public class Exercise09 {
 	public static void main(String[] args) {
 		boolean run = true;
 		int studentNum = 0;
-		int[] i = null;
+		int[] scores = null;
 		Scanner scanner = new Scanner(System.in);
 		
 		while(run) {
@@ -19,7 +19,10 @@ public class Exercise09 {
 			int selectNo = scanner.nextInt();
 			
 			if(selectNo == 1 ) {
-				//작성위치
+				System.out.println("학생수> ");
+				studentNum = scanner.nextInt();
+				scores = new int[studentNum];
+				
 			} else if(selectNo == 2){
 				//작성위치
 			} else if(selectNo == 3) {

@@ -26,5 +26,5 @@ System.out.println("aAry 배열의 합: " + sum);
 	   
 	   
 	   
-   }
-}
+   
+

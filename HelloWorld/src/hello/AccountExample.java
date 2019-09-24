@@ -81,7 +81,7 @@ public class AccountExample {
 		System.out.println("출금액: ");
 		int accntBalance = sc.nextInt();
 		for(Account accnt : accountArray) {
-			if(accnt.getAno().equals(accntNo)) {
+			if(accnt !=null && accnt.getAno().equals(accntNo)) {
 				accnt.setBalance(accntBalance*(-1));
 			}
 		}
@@ -89,6 +89,7 @@ public class AccountExample {
 	}
 
 	public static Account findAccount(String ano) {
+		
 		return null; // 입력한 계좌만 가지고 옴
 	}
 

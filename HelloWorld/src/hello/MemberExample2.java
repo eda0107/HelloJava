@@ -86,11 +86,11 @@ public class MemberExample2 {
 			}
 
 		}
-		if(isId==true && isPw==true)
+		if(isId && isPw)
 			System.out.println("이름은 "+name+", 나이는"+age);
-		else if(isId==true && isPw==false)
+		else if(isId && !isPw)
 			System.out.println("패스워드가 잘못되었습니다.");
-		else if(isId==false && isPw==false) {
+		else if(!isId && !isPw) {
 			System.out.println("존재하지 않습니다");
 		}
 

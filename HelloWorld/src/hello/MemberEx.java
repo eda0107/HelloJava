@@ -1,21 +1,21 @@
 package hello;
 
 public class MemberEx {
-	
+
 	private String name;
 	private String id;
 	private String passwd;
 	private int age;
-	
-	public MemberEx() {	
+
+	public MemberEx() {
 	}
-	
-	public MemberEx(String name, String id, String passwd, int age)
-	{this.name = name;
-	this.id = id;
-	this.passwd = passwd;
-	this.age = age;
-}
+
+	public MemberEx(String name, String id, String passwd, int age) {
+		this.name = name;
+		this.id = id;
+		this.passwd = passwd;
+		this.age = age;
+	}
 
 	public String getName() {
 		return name;

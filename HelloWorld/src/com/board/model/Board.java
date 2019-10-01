@@ -21,6 +21,10 @@ public class Board {
 	public String getTitle() {
 		return title;
 	}
+	@Override
+	public String toString() {
+		return "[게시 번호=" + boardNo + ", 제목=" + title + ", 내용=" + contents + ", 작성자=" + writer + "]";
+	}
 	public void setTitle(String title) {
 		this.title = title;
 	}

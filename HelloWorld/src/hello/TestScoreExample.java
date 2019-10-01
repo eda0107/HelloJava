@@ -85,6 +85,10 @@ boolean run = true;
 	}
 
 	public static void seeChart() {
+		int sum = 0;
+		int avg = 0;
+		
+
 
 	}
 

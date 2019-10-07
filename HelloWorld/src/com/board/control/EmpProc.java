@@ -6,17 +6,17 @@ import java.util.Scanner;
 
 import com.board.impl.BoardCollectionImpl;
 import com.board.impl.BoardServiceImpl;
+import com.board.impl.EmployeeServiceImpl;
 import com.board.model.Board;
 import com.board.model.BoardCollection;
 import com.board.model.BoardService;
+import com.board.model.Employee;
+import com.board.model.EmployeeService;
 
-public class BoardProc {
+public class EmpProc {
 	Scanner sc = new Scanner(System.in);
-//	Board[] boardAry = new Board[10];
-	List<Board> boardAry = new ArrayList<>();
 
-//	BoardService service = new BoardServiceImpl();
-	BoardCollection service = new BoardCollectionImpl();
+	EmployeeService service = new EmployeeServiceImpl();
 
 	public void execute() {
 		while (true) {
@@ -35,7 +35,7 @@ public class BoardProc {
 //				sc.nextLine();
 				// e.printStackTrace();
 			}
-			sc.nextLine();
+//			sc.nextLine();
 			if (menu == 1) {
 				writeBoard();
 			} else if (menu == 2) {
@@ -66,24 +66,42 @@ public class BoardProc {
 		System.out.println("변경할 작성자:");
 		String writer = sc.nextLine();
 		Board board = new Board(boardNo, title, content, writer);
-		service.updateBoard(board, boardAry);
+//		service.updateBoard(board, boardAry);
 
 	}
 
 	public void writeBoard() {
-		System.out.println("글 작성");
-		System.out.println("게시글 번호 입력: ");
-		int boardNo = sc.nextInt();
+		System.out.println("직원 등록");
+		System.out.println("직원 번호 입력: ");
+		int empId = sc.nextInt();
 		sc.nextLine();
-		System.out.println("제목 입력: ");
-		String title = sc.nextLine();
-		System.out.println("내용 입력: ");
-		String contents = sc.nextLine();
-		System.out.println("작성자 입력: ");
-		String writer = sc.nextLine();
-		Board board = new Board(boardNo, title, contents, writer);
+		System.out.println("이름을 입력하세요 ");
+		String firstName = sc.nextLine();
+		System.out.println("성을 입력하세요 ");
+		String lastName = sc.nextLine();
+		System.out.println("이메일을 입력하세요");
+		String email = sc.nextLine();
+		System.out.println("입사일을 입력하세요");
+		String hireDate = sc.nextLine();
+		System.out.println("급여를 입력하세요");
+		int salary = sc.nextInt();
+		sc.nextLine();
+		System.out.println("job id를 입력하세요");
+		String jobId = sc.nextLine();
 
-		service.writeBoard(board, boardAry);
+		Employee emp = new Employee();
+		emp.setEmployeeId(empId);
+		emp.setFirstName(firstName);
+		emp.setLastName(lastName);
+		emp.setEmail(email);
+		emp.setHireDate(hireDate); //2010-10-05
+		emp.setSalary(salary);
+		emp.setJobId(jobId);
+		service.insertEmployee(emp);
+
+//		Board board = new Board(first_name, last_name, email, hire_date);
+//
+//		service.writeBoard(board, boardAry);
 //		for (int i = 0; i < boardAry.length; i++) {
 //			if (boardAry[i] == null); {
 //				boardAry[i] = board;
@@ -97,8 +115,8 @@ public class BoardProc {
 		System.out.println("조회할 번호 입력: ");
 		int boardNo = sc.nextInt();
 
-		Board board = service.getBoard(boardNo, boardAry);
-		System.out.println(board);
+//		Board board = service.getBoard(boardNo, boardAry);
+//		System.out.println(board);
 //		for (int i = 0; i < boardAry.length; i++) {
 //			if (boardAry[i] != null && boardAry[i].getBoardNo() == boardNo) {
 //				System.out.println(boardAry[i].getTitle() + "," + boardAry[i].getContents());
@@ -109,10 +127,9 @@ public class BoardProc {
 	public void getBoardList() {
 		System.out.println("전체 글 조회");
 //		Board[] resultAry = service.getBoardList(boardAry);
-		List<Board> resultAry = service.getBoardList(boardAry);
-		for (Board brd : resultAry) {
-			if(brd!=null)
-			System.out.println(brd);
+		List<Employee> employees = service.getEmpList();
+		for (Employee employee : employees) {
+			System.out.println(employee);
 		}
 //		for (int i = 0; i < boardAry.length; i++) {
 //			if (boardAry[i] != null) {
@@ -126,7 +143,7 @@ public class BoardProc {
 		System.out.println("삭제할 번호?");
 		int boardNo2 = sc.nextInt();
 
-		service.deleteBoard(boardNo2, boardAry);
+//		service.deleteBoard(boardNo2, boardAry);
 
 	}
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import com.board.model.Employee;
 import com.board.model.EmployeeService;
 
-public class EmployeeServiceImpl implements EmployeeService {
-	EmpDAO dao = new EmpDAO();
+public class EmployeeServiceImpl implements EmployeeService { //인터페이스를 실행하기 위한 메소드
+	EmpDAO dao = new EmpDAO(); //EmpDAO를 불러옴(객체 생성)
 
 	@Override
 	public List<Employee> getEmpList() {
@@ -17,12 +17,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee getEmployee(int empNo) {
-		return null;
+		Employee emp = dao.getEmployee(empNo);
+		return emp;
 	}
 
 	@Override
 	public void insertEmployee(Employee emp) {
-		dao.insertEmp(emp);
+		//dao.insertEmp(emp);
+		dao.insertEmpProc(emp);
 
 	}
 
@@ -33,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void deleteEmployee(int empNo) {
-
+		dao.deleteEmployee(empNo); 
 	}
 
 }

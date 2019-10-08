@@ -13,7 +13,7 @@ import com.board.model.BoardService;
 import com.board.model.Employee;
 import com.board.model.EmployeeService;
 
-public class EmpProc {
+public class EmpProc { //Main이 실행되기 위해서 수행되어야 하는 프로세스 (EmpDAO 사용하는)
 	Scanner sc = new Scanner(System.in);
 
 	EmployeeService service = new EmployeeServiceImpl();
@@ -21,7 +21,7 @@ public class EmpProc {
 	public void execute() {
 		while (true) {
 			System.out.println("메뉴 선택하세요");
-			System.out.println("1. 작성 2. 조회 3. 전체 조회 4. 종료 5. 삭제 6. 변경");
+			System.out.println("1. 작성 | 2. 조회 | 3. 전체 조회 | 4. 종료 | 5. 삭제 | 6. 변경");
 			int menu = 0;
 			try {
 				menu = sc.nextInt(); // error 발생 가능한 곳
@@ -94,7 +94,7 @@ public class EmpProc {
 		emp.setFirstName(firstName);
 		emp.setLastName(lastName);
 		emp.setEmail(email);
-		emp.setHireDate(hireDate); //2010-10-05
+		emp.setHireDate(hireDate); // 2010-10-05
 		emp.setSalary(salary);
 		emp.setJobId(jobId);
 		service.insertEmployee(emp);
@@ -112,8 +112,10 @@ public class EmpProc {
 
 	public void getBoard() {
 		System.out.println("한 건 조회");
-		System.out.println("조회할 번호 입력: ");
-		int boardNo = sc.nextInt();
+		System.out.println("조회할 사원 번호를 입력: ");
+		int empNo = sc.nextInt();
+		Employee emp = service.getEmployee(empNo);
+		System.out.println(emp);
 
 //		Board board = service.getBoard(boardNo, boardAry);
 //		System.out.println(board);
@@ -140,8 +142,10 @@ public class EmpProc {
 	}
 
 	public void delBoard() {
-		System.out.println("삭제할 번호?");
-		int boardNo2 = sc.nextInt();
+		System.out.println("삭제할 사원 번호 입력");
+		int empNo = sc.nextInt();
+		sc.nextLine();
+		service.deleteEmployee(empNo);
 
 //		service.deleteBoard(boardNo2, boardAry);
 

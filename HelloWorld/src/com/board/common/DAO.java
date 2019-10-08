@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DAO {
+public class DAO { //DB 연결하는 메소드
 	public static Connection getConnect() {
 		Connection conn = null;
 		String user = "hr";

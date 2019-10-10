@@ -20,6 +20,10 @@ public class BoardProc {
 
 	public void execute() {
 		while (true) {
+			
+			login_check();
+			
+			
 			System.out.println("메뉴 선택하세요");
 			System.out.println("1. 작성 2. 조회 3. 전체 조회 4. 종료 5. 삭제 6. 변경");
 			int menu = 0;
@@ -55,6 +59,24 @@ public class BoardProc {
 
 	}
 
+	public void login_check() {
+		while(true) {
+			System.out.println("id 입력");
+			sc.nextLine();
+			System.out.println("pw 입력");
+			sc.nextLine();
+			String id = sc.nextLine();
+			String passwd = sc.nextLine();
+			
+			if(id.equals("user1") && passwd.equals("1234")) {
+				} else {
+					System.out.println("id, pw 입력");
+				}
+		}
+	}
+	
+	
+	
 	public void updateBoard() {
 		System.out.println("변경할 글 번호:");
 		int boardNo = sc.nextInt();

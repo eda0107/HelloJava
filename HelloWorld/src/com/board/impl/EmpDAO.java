@@ -16,6 +16,8 @@ public class EmpDAO { //DB 사용하는 메소드
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	
+
 	public void deleteEmployee(int empNo) {
 		conn = DAO.getConnect();
 		String sql = "delete from emp_temp where employee_id = ?";

@@ -16,14 +16,126 @@ public class BoardDBDAO {
 	ResultSet rs = null;
 	PreparedStatement pstmt = null;
 
+	public void deleteBoard1(BoardDB board) {
+		conn = DAO.getConnect();
+		List<BoardDB> list = getReplyList(board.getBoardNo());
+		if (list.size() > 0) {
+			System.out.println("댓글이 존재합니다.");// 삭제할 수 없게
+		} else {
+
+			String sql = "delete * from boards where board_no = ?";
+			int r = 0;
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, board.getBoardNo());
+				r = pstmt.executeUpdate();
+				System.out.println(r + "건이 삭제되었습니다.");
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+	}
+
+	
+	public void deleteBoard2(BoardDB board) {
+		conn = DAO.getConnect();
+		String sql = "delete from boards where board_no = ?";
+	
+			try {
+				int r = 0;
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, board.getBoardNo());
+				r = pstmt.executeUpdate();
+				System.out.println(r + "건이 삭제되었습니다.");
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+	
+	public boolean checkForReply(int boardNo) { //delete2에 대한 메소드
+		conn = DAO.getConnect();
+		String sql = "select count(*) as cnt from boards where board_no = ?";
+		int cnt = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (cnt > 0)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean checkResponsibility(BoardDB board) {
+		conn = DAO.getConnect();
+		int result = 0;
+		String sql = "select count(*) as cnt from boards where orig_no is null and board_no = ?" + "and writer = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board.getBoardNo());
+			pstmt.setString(2, board.getWriter());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("cnt");
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (result > 0)
+			return true;
+		else
+			return false;
+
+	}
+
 	public void updateBoard(BoardDB board) {
 		conn = DAO.getConnect();
-		String sql = "update boards set orgi_no = orgi_no ";
+		String sql = "update boards set orig_no = orig_no ";
 		if (board.getTitle() != null && !board.getTitle().equals("")) {
 			sql += ",title=? ";
 		}
 		if (board.getContent() != null && !board.getContent().equals("")) {
-			sql += ",contents=? ";
+			sql += ",content=? ";
 		}
 		sql += "where board_no=? and orig_no is null ";
 
@@ -33,7 +145,7 @@ public class BoardDBDAO {
 			if (board.getTitle() != null && !board.getTitle().equals("")) {
 				pstmt.setString(++n, board.getTitle());
 			}
-			if (board.getContent() != null  && !board.getContent().equals("")) {
+			if (board.getContent() != null && !board.getContent().equals("")) {
 				pstmt.setString(++n, board.getContent());
 			}
 			pstmt.setInt(++n, board.getBoardNo());
@@ -94,7 +206,7 @@ public class BoardDBDAO {
 				board.setContent(rs.getString("content"));
 				board.setWriter(rs.getString("writer"));
 				board.setCreationDate(rs.getString("creation_date"));
-	
+
 				list.add(board);
 
 			}

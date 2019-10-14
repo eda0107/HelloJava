@@ -28,12 +28,29 @@ public class BoardDBServiceImpl implements BoardDBService {
 
 	@Override
 	public void updateBoard(BoardDB board) {
+//해당 글에 대한 권한이 있는지 확인하는 부분
+		if (dao.checkResponsibility(board)) {
+			dao.updateBoard(board);
+			System.out.println("변경되었습니다");
+		} else {
 
-		dao.updateBoard(board);
+			System.out.println("해당글에 대한 권한이 없습니다.");
+			dao.updateBoard(board);
+		}
 	}
 
 	@Override
-	public void deleteBoard(int boardNo) {
+	public void deleteBoard(BoardDB board) {
+		if (dao.checkResponsibility(board)) { //권한체크
+			if (!dao.checkForReply(board.getBoardNo())) { //댓글 유무 체크
+				dao.deleteBoard2(board);
+				System.out.println("삭제되었습니다");
+			} else {
+				System.out.println("댓글이 존재합니다");
+			}
+		} else {
+			System.out.println("해당 글에 대한 권한이 없습니다.");
+		}
 
 	}
 

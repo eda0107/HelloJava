@@ -18,7 +18,7 @@ public class BoardDBProc {
 
 		while (true) {
 			int menu = 0;
-			System.out.println("1. 게시글 작성 | 2. 게시글 전체 조회 | 3. 게시글 조회 | 4. 게시글 수정 |  9. 종료");
+			System.out.println("1. 게시글 작성 | 2. 게시글 전체 조회 | 3. 게시글 조회 | 4. 게시글 수정 | 5. 삭제 |  9. 종료");
 			menu = sc.nextInt();
 			sc.nextLine();
 			if (menu == 1) {
@@ -31,28 +31,45 @@ public class BoardDBProc {
 			} else if (menu == 3) {
 				System.out.println("3번을 선택했습니다");
 				getBoard();
-			} else if(menu == 4) {
+			} else if (menu == 4) {
 				System.out.println("4번을 선택했습니다");
 				updateBoard();
+			} else if (menu == 5) {
+				System.out.println("5번을 선택했습니다");
+				deleteBoard2();
 			}
 
 		}
 	}
-	
+
+	public void deleteBoard2() {
+		System.out.println("삭제할 글번호 입력");
+		int boardNo = sc.nextInt();
+		sc.nextLine();
+		BoardDB board = new BoardDB();
+		board.setBoardNo(boardNo);
+		board.setWriter(loginId); // id를 받아야 함
+
+		service.deleteBoard(board);
+
+	}
+
 	public void updateBoard() {
-	      System.out.println("변경할 글 번호를 입력하세요.");
-	      int boardNo = sc.nextInt(); sc.nextLine();
-	      System.out.println("변경할 제목을 입력하세요 ");
-	      String title = sc.nextLine();
-	      System.out.println("변경 내용을 입력하세요");
-	      String content = sc.nextLine();
-	      BoardDB board = new BoardDB();
-	      board.setBoardNo(boardNo);
-	      board.setTitle(title);
-	      board.setContent(content);
-	      
-	      service.updateBoard(board);
-	   }
+		System.out.println("변경할 글 번호를 입력하세요.");
+		int boardNo = sc.nextInt();
+		sc.nextLine();
+		System.out.println("변경할 제목을 입력하세요 ");
+		String title = sc.nextLine();
+		System.out.println("변경 내용을 입력하세요");
+		String content = sc.nextLine();
+		BoardDB board = new BoardDB();
+		board.setBoardNo(boardNo);
+		board.setTitle(title);
+		board.setContent(content);
+		board.setWriter(loginId);
+
+		service.updateBoard(board);
+	}
 
 	public void getBoardList() {
 		System.out.println("게시글 전체 조회");
@@ -70,6 +87,7 @@ public class BoardDBProc {
 		sc.nextLine();
 
 		BoardDB board = service.getBoard(boardNo);
+		System.out.println(board + "," + board.getBoardNo());
 		if (board != null && board.getBoardNo() != 0) {
 			System.out.println("===========<원본>============"); // 원본
 
@@ -92,8 +110,9 @@ public class BoardDBProc {
 				System.out.println("댓글없음");
 			}
 			System.out.println("1. 댓글 작성 | 2. 이전 메뉴");
-			int subMenu = sc.nextInt();sc.nextLine();
-			
+			int subMenu = sc.nextInt();
+			sc.nextLine();
+
 			if (subMenu == 1) {
 				System.out.println("댓글을 작성하세요");
 				String reply = sc.nextLine();

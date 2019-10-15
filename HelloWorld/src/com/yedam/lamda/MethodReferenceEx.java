@@ -22,22 +22,27 @@ public class MethodReferenceEx {
 		cal.instanceSum(a, b); // instanceSum 메소드를 사용하려면 인스턴스화 시켜줘야함
 
 		IntBinaryOperator oper;
-		
-		oper = (x,y) -> {
+
+		oper = (x, y) -> {
 			return Calculator.staticSum(x, y);
 		};
-		result = oper.applyAsInt(a, b);
-		System.out.println("정적 메소드 참조 1: "+result);
-		
+		result = oper.applyAsInt(a, b); //1과 2가 같음 (표현만 다름)
+		System.out.println("정적 메소드 참조 1: " + result);
+
 		oper = Calculator::staticSum; // ::의 의미는? 메소드를 참조하겠다 매개값을 두 개 받아서 처리하겠다
-		result = oper.applyAsInt(a, b); //static 메소드
+		result = oper.applyAsInt(a, b); // static 메소드
 		System.out.println("정적 메소드 참조2: " + result);
-		
+
 		System.out.println("===================================");
-		
-		oper = cal::instanceSum; //instance 메소드
+
+		oper = (x, y) -> {
+			return cal.instanceSum(x, y);
+		};
+		result = oper.applyAsInt(b, a); //1과 2가 같음 (표현만 다름)
+		System.out.println("인스턴스 메소드 참조1: " + result);
+		oper = cal::instanceSum; // instance 메소드
 		result = oper.applyAsInt(b, a);
-		System.out.println("인스턴스 메소드 참조: " + result);
+		System.out.println("인스턴스 메소드 참조2: " + result);
 	}
 
 }

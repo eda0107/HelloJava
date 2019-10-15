@@ -18,7 +18,7 @@ public class BoardDBProc {
 
 		while (true) {
 			int menu = 0;
-			System.out.println("1. 게시글 작성 | 2. 게시글 전체 조회 | 3. 게시글 조회 | 4. 게시글 수정 | 5. 삭제 |  9. 종료");
+			System.out.println("1. 게시글 작성 | 2. 게시글 전체 조회 | 3. 게시글 조회 | 4. 게시글 수정 | 5. 삭제 | 6. | 7. | 8. | 9. 종료");
 			menu = sc.nextInt();
 			sc.nextLine();
 			if (menu == 1) {
@@ -37,7 +37,7 @@ public class BoardDBProc {
 			} else if (menu == 5) {
 				System.out.println("5번을 선택했습니다");
 				deleteBoard2();
-			}
+			} 
 
 		}
 	}

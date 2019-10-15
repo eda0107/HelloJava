@@ -235,7 +235,7 @@ public class BoardDBDAO {
 			while (rs.next()) {
 				BoardDB board = new BoardDB();
 				board.setBoardNo(rs.getInt("board_no"));
-				board.setTitle(rs.getString("title"));
+				board.setTitle(rs.getString("title")+"("+rs.getString("reply_cnt")+")");
 				board.setContent(rs.getString("content"));
 				board.setWriter(rs.getString("writer"));
 				board.setCreationDate(rs.getString("creation_date"));

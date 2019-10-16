@@ -12,6 +12,7 @@ public interface BoardDBService {
 	
 	public void insertBoard(BoardDB board); //게시글 작성
 	
+	
 	public void updateBoard(BoardDB board); //수정
 
 	public void deleteBoard(BoardDB board); //삭제

@@ -1,5 +1,6 @@
 package com.DBprogram.control;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.DBprogram.impl.DBProgramServiceImpl;
@@ -37,6 +38,18 @@ public class DBProgramProc {
 		}
 
 	}
+	
+	public void getDeptList() {
+		
+	System.out.println("조회할 부서를 입력: ");
+	String deptName = sc.nextLine();
+	List<DBProgram> list = service.getDeptList(deptName);
+	for (DBProgram pro : list) {
+		System.out.println("사원 번호 " + pro.getEmployeeNo() + "부서 " + pro.getDeptNo() + "급여 " + pro.getSalary()
+				+ "입사일 " + pro.getHireDate());
+	}
+		
+	}
 
 	public void insertEmp() {
 //		System.out.println("사원 번호를 입력하세요.");
@@ -57,14 +70,28 @@ public class DBProgramProc {
 		emp.setDeptNo(deptNo);
 		emp.setSalary(salary);
 		emp.setHireDate(hireDate);
-		
+
 		service.insertEmployee(emp);
-		
+
 	}
 
 	public void getEmpName() {
-		System.out.println("사원 이름 조회");
-		
+		System.out.println("사원 이름을 입력하시오");
+		System.out.println("조회할 사원 이름을 입력: ");
+		String employeeName = sc.nextLine();
+
+//		DBProgram emp = service.getEmpList(employeeName);
+//		System.out.println(emp+","+emp.getEmployeeName());
+//		if(emp != null &&)
+//
+//		String empName = sc.nextLine();
+//		DBProgram emp = (DBProgram) service.getEmpList();
+//		System.out.println(emp);
+		List<DBProgram> list = service.getEmpList(employeeName);
+		for (DBProgram pro : list) {
+			System.out.println("사원 번호 " + pro.getEmployeeNo() + "부서 " + pro.getDeptNo() + "급여 " + pro.getSalary()
+					+ "입사일 " + pro.getHireDate());
+		}
 
 	}
 
@@ -77,6 +104,13 @@ public class DBProgramProc {
 	}
 
 	public void deleteDept() {
+		System.out.println("삭제할 사원번호 입력");
+		int employeeNo = sc.nextInt();
+		sc.nextLine();
+		DBProgram emp = new DBProgram();
+		emp.setEmployeeNo(employeeNo);
+		
+		service.deleteEmployee(emp);
 
 	}
 

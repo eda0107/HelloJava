@@ -10,7 +10,7 @@ public class BoardEdit  implements Command  {
 
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("Edit");
 		
 	}
 

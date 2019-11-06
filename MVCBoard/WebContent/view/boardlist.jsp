@@ -6,11 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function transData(n){
+		frm.id.value = n;
+		frm.submit();
+	}
+</script>
 </head>
 <body>
 <div align="center">
 	<div><h1> 게시판 목록 </h1></div>
 	<div>
+	<form id="frm" name="frm" action="boardView.do"  method="post">
+			<input type="hidden" id="id" name="id">
 		<table border="1">
 			<tr>
 			<th width="50">순번</th>
@@ -25,7 +33,7 @@
 			<!-- 반복시켜주기 위해서 forEach 사용 /list를 가져오는 대신, 한 행의 이름을  dto라고 붙여줌 dto.java와 상관 X-->
 			<tr onmouseover="this.style.backgroundColor = '#FFFF99'"
 				onmouseout="this.style.backgroundColor=''"
-				onclick="location.href='boardView.do?id='+${dto.id}">
+				onclick="transData(${dto.id})">
 			<td align="center">${dto.id }</td>
 			<td align="center">${dto.name }</td>
 			<td align="center">${dto.title }</td>
@@ -34,6 +42,7 @@
 			</tr>
 			</c:forEach>
 		</table>
+		</form>
 	</div>
 	
 	<div>

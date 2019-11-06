@@ -34,7 +34,7 @@ public class BoardDao {
 	public ArrayList<BoardDto> select() { // 전체리스트
 		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		BoardDto dto;
-		String sql = "select * from mvc_board";
+		String sql = "select * from mvc_board order by bid desc";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery(); // select니까 rs
@@ -76,6 +76,13 @@ public class BoardDao {
 				dto.setContent(rs.getString("bcontent"));
 				dto.setwDate(rs.getDate("bdate"));
 				dto.setHit(rs.getInt("bhit"));
+				dto.setId(rs.getInt("bid"));
+				dto.setGroup(rs.getInt("bgroup"));
+				dto.setStep(rs.getInt("bstep"));
+				dto.setIndent(rs.getInt("bindent"));
+				
+				viewCountUpdate(rs.getInt("bid")); //조회수 증가 메소드 호출
+				
 		
 			}
 		} catch (SQLException e) {
@@ -85,6 +92,21 @@ public class BoardDao {
 
 		close();
 		return dto;
+	}
+
+	private void viewCountUpdate(int id) { //조회수 증가
+		// TODO Auto-generated method stub
+		
+		String sql = "update mvc_board set bhit = bhit+1 where bid=" + id;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
 	}
 
 	public int insert(BoardDto dto) { // 글 추가

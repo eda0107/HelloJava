@@ -30,7 +30,7 @@ public class FrontController extends HttpServlet {
    }
 
 	
-	public void init(ServletConfig config) throws ServletException {
+	public void init(ServletConfig config) throws ServletException { //new 키워드를 통해 인스턴스를 생성한 후 사용(다른 곳에서 frontController를 호출한 적 없음 but Tomcat이 frontController를 호출하여 사용)
 		list = new HashMap<String, Command>();
 		//스택에 올라와있는 url리스트
 		list.put("/index.do", new MainCommand()); //url에서 index.do로 들어오면 MainCommand를 실행

@@ -34,7 +34,7 @@ public class BoardDao {
 	public ArrayList<BoardDto> select() { // 전체리스트
 		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		BoardDto dto;
-		String sql = "select * from mvc_board order by bid desc";
+		String sql = "select * from mvc_board where btitle != '[댓글]' order by bgroup desc, bstep";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery(); // select니까 rs
@@ -50,7 +50,7 @@ public class BoardDao {
 				dto.setStep(rs.getInt("bstep"));
 				dto.setIndent(rs.getInt("bindent"));
 
-				list.add(dto); //dto를 리스트에 추가
+				list.add(dto); // dto를 리스트에 추가
 
 			}
 		} catch (SQLException e) {
@@ -62,15 +62,16 @@ public class BoardDao {
 		return list;
 	}
 
-	public BoardDto select(int id) { // 세부목록조회
-		BoardDto dto = new BoardDto(); 
-		String sql = "select * from mvc_board where bid=?";
+	public ArrayList<BoardDto> select(int id) { // 세부목록조회
+		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+		BoardDto dto; //= new BoardDto();
+		String sql = "select * from mvc_board where bgroup = ? ";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery(); // select니까 rs
-			if (rs.next()) { 
-				
+			while (rs.next()) {
+				dto = new BoardDto();
 				dto.setName(rs.getString("bname"));
 				dto.setTitle(rs.getString("btitle"));
 				dto.setContent(rs.getString("bcontent"));
@@ -80,10 +81,10 @@ public class BoardDao {
 				dto.setGroup(rs.getInt("bgroup"));
 				dto.setStep(rs.getInt("bstep"));
 				dto.setIndent(rs.getInt("bindent"));
+				list.add(dto);
 				
-				viewCountUpdate(rs.getInt("bid")); //조회수 증가 메소드 호출
-				
-		
+				viewCountUpdate(rs.getInt("bid")); // 조회수 증가 메소드 호출
+
 			}
 		} catch (SQLException e) {
 
@@ -91,29 +92,29 @@ public class BoardDao {
 		}
 
 		close();
-		return dto;
+		return list;
 	}
 
-	private void viewCountUpdate(int id) { //조회수 증가
+	private void viewCountUpdate(int id) { // 조회수 증가
 		// TODO Auto-generated method stub
-		
+
 		String sql = "update mvc_board set bhit = bhit+1 where bid=" + id;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public int insert(BoardDto dto) { // 글 추가
 		int n = 0;
-		String sql="insert into mvc_board(bid, bname, btitle, bcontent, bdate, bgroup, bstep, bindent) "
-				+"values(b_num.nextval,?,?,?,?,b_num.currval,0,0)";
-		
+		String sql = "insert into mvc_board(bid, bname, btitle, bcontent, bdate, bgroup, bstep, bindent) "
+				+ "values(b_num.nextval,?,?,?,?,b_num.currval,0,0)";
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getName());
@@ -131,13 +132,33 @@ public class BoardDao {
 
 	public int update(BoardDto dto) { // 글 갱신
 		int n = 0;
+		String sql = "update mvc_board set btitle=?, bcontent=? where bid=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setInt(3, dto.getId());
+			n = pstmt.executeUpdate();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 
 		close();
 		return n;
 	}
 
-	public int delete(BoardDto dto) { // 글 삭제
+	public int delete(int id) { // 글 삭제
 		int n = 0;
+		String sql = "delete from mvc_board where bid = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			n=pstmt.executeUpdate();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 
 		close();
 		return n;
